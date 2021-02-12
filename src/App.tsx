@@ -7,7 +7,10 @@ import QuestionCard from "./components/QuestionCard";
 //TYPES
 import { QuestionState, Difficulty } from "./API";
 
-type AnswerObject = {
+//STYLES  
+import {GlobalStyle, Wrapper} from "./App.styles"
+
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -55,29 +58,30 @@ const App = () => {
         correct,
         correctAnswer: questions[number].correct_answer,
       };
-      setUserAnswers(prev => [...prev, answerObject])
+      setUserAnswers(prev => [...prev, answerObject]);
     }
   };
   const nextQuestion = () => {
-//move on, unless on last question
-const nextQuestion = number + 1;
-if (nextQuestion=== TOTAL_QUESTIONS) {
-  setGameOver(true)
-} else {
-  setNumber(nextQuestion)
-}
-
+    //move on, unless on last question
+    const nextQuestion = number + 1;
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      setNumber(nextQuestion);
+    }
   };
 
   return (
-    <div className="App">
+    <>
+    <GlobalStyle/>
+    <Wrapper>
       <h1>React Quiz!</h1>
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <button className="start" onClick={startTriva}>
           Start
         </button>
       ) : null}
-      {!gameOver ? <p className="score">Score: </p> : null}
+      {!gameOver ? <p className="score">Score: {score}</p> : null}
       {loading && <p>Loading Questions...</p>}
       {!loading && !gameOver && (
         <QuestionCard
@@ -97,7 +101,8 @@ if (nextQuestion=== TOTAL_QUESTIONS) {
           Next Question
         </button>
       ) : null}
-    </div>
+    </Wrapper>
+    </>
   );
 };
 
